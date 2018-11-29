@@ -32,15 +32,32 @@ part_enroll = select(grad_enroll, year, part_time_men, part_time_women)
 # total enrollment dataset
 total_enroll = select(grad_enroll, year, total_men, total_women)
 
+
 # plotting full & part time enrollment
 plot_enroll = ggplot(full_enroll, aes(x = year, y = full_time_men)) +
   geom_line(color = 'red') +
   geom_line(data = full_enroll, aes(x = year, y = full_time_women), color = 'pink') +
   geom_line(data = part_enroll, aes(x = year, y = part_time_men), color = 'blue') +
-  geom_line(data = part_enroll, aes(x = year, y = part_time_women), color = 'cornflowerblue')
-  theme_classic() 
-
+  geom_line(data = part_enroll, aes(x = year, y = part_time_women), color = 'lavender') +
+  theme_classic() +
+  labs(x = "Year", y = "Amount Enrolled in Graduate School", title = "Female and Male Enrolled in Graduate School Part-time and Full-time \n(1967 - 2015)") 
+# need to add legend
+# Viewing plot
 plot_enroll
+
+
+# total enrollment dataset & plotting for background info
+total_enroll = select(grad_enroll, year, total_men, total_women)
+plot_total_enroll = ggplot(total_enroll, aes(x = year, y = total_men)) +
+  geom_line(color = 'red') +
+  geom_line(data = grad_enroll, aes(x = year, y = total_women), color = 'pink') +
+  theme_classic() +
+  labs(x = "Year", y = "Amount Enrolled in Graduate School")
+# Viewing plot
+plot_total_enroll
+
+
+
 ```
 
 
