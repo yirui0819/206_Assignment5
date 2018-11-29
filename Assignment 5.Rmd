@@ -47,6 +47,49 @@ plot_enroll
 #### Part 2
 ```{r}
 
+phd_PSES <- phd %>%
+  filter(`f_s` == "PSES_Female" | `f_s` == "PSES_Male") %>% 
+  select(-f_s)
+
+rownames(phd_PSES) <- c("PSES_Male", "PSES_Female")
+phd_PSES <- t(phd_PSES)
+phd_PSES <- data.matrix(phd_PSES)
+PSES_prop <- prop.table(phd_PSES, 1)
+PSES_x2 <- chisq.test(PSES_prop)
+PSES_x2
+
+phd_Engi <- phd %>%
+  filter(`f_s` == "Engi_Female" | `f_s` == "Engi_Male") %>% 
+  select(-f_s)
+
+rownames(phd_Engi) <- c("Engi_Male", "Engi_Female")
+phd_Engi <- t(phd_Engi)
+phd_Engi <- data.matrix(phd_Engi)
+Engi_prop <- prop.table(phd_Engi, 1)
+Engi_x2 <- chisq.test(Engi_prop)
+Engi_x2
+
+phd_Edu <- phd %>%
+  filter(`f_s` == "Edu_Female" | `f_s` == "Edu_Male") %>% 
+  select(-f_s)
+
+rownames(phd_Edu) <- c("Edu_Male", "Edu_Female")
+phd_Edu <- t(phd_Edu)
+phd_Edu <- data.matrix(phd_Edu)
+Edu_prop <- prop.table(phd_Edu, 1)
+Edu_x2 <- chisq.test(Edu_prop)
+Edu_x2
+
+phd_HA <- phd %>%
+  filter(`f_s` == "HA_Female" | `f_s` == "HA_Male") %>% 
+  select(-f_s)
+
+rownames(phd_HA) <- c("HA_Male", "HA_Female")
+phd_HA <- t(phd_HA)
+phd_HA <- data.matrix(phd_HA)
+HA_prop <- prop.table(phd_HA, 1)
+HA_x2 <- chisq.test(HA_prop)
+HA_x2
 ```
 
 
