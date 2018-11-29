@@ -108,6 +108,19 @@ HA_prop <- prop.table(phd_HA1, 1)
 HA_x2 <- chisq.test(HA_prop)
 HA_x2
 
+phd_plot <- phd %>% 
+  filter(`f_s` == "PSES_Female" |
+           `f_s` == "Engi_Female" |
+           `f_s` == "Edu_Female" |
+           `f_s` == "HA_Female"
+         ) %>% 
+  gather("Year", "Count", 2:4)
+phd_plot$Year <- as.numeric(phd_plot$Year)
+
+phd_plt <- ggplot(phd_plot)+
+  geom_line(aes(x = Year, y = Count, color=f_s))
+
+phd_plt
 
 
 ```
