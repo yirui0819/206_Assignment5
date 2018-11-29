@@ -66,7 +66,8 @@ plot_total_enroll
 
 phd_PSES <- phd %>%
   filter(`f_s` == "PSES_Female" | `f_s` == "PSES_Male") %>% 
-  select(-f_s)
+  select(-f_s) %>% 
+  select("1985", "2000", "2015")
 
 rownames(phd_PSES) <- c("PSES_Male", "PSES_Female")
 phd_PSES <- t(phd_PSES)
@@ -77,7 +78,8 @@ PSES_x2
 
 phd_Engi <- phd %>%
   filter(`f_s` == "Engi_Female" | `f_s` == "Engi_Male") %>% 
-  select(-f_s)
+  select(-f_s) %>% 
+  select("1985", "2000", "2015")
 
 rownames(phd_Engi) <- c("Engi_Male", "Engi_Female")
 phd_Engi <- t(phd_Engi)
@@ -88,7 +90,8 @@ Engi_x2
 
 phd_Edu <- phd %>%
   filter(`f_s` == "Edu_Female" | `f_s` == "Edu_Male") %>% 
-  select(-f_s)
+  select(-f_s) %>% 
+  select("1985", "2000", "2015")
 
 rownames(phd_Edu) <- c("Edu_Male", "Edu_Female")
 phd_Edu <- t(phd_Edu)
@@ -99,7 +102,8 @@ Edu_x2
 
 phd_HA <- phd %>%
   filter(`f_s` == "HA_Female" | `f_s` == "HA_Male") %>% 
-  select(-f_s)
+  select(-f_s) %>% 
+  select("1985", "2000", "2015")
 
 rownames(phd_HA) <- c("HA_Male", "HA_Female")
 phd_HA <- t(phd_HA)
@@ -114,11 +118,12 @@ phd_plot <- phd %>%
            `f_s` == "Edu_Female" |
            `f_s` == "HA_Female"
          ) %>% 
-  gather("Year", "Count", 2:4)
+  gather("Year", "Count", 2:8)
 phd_plot$Year <- as.numeric(phd_plot$Year)
 
 phd_plt <- ggplot(phd_plot)+
-  geom_line(aes(x = Year, y = Count, color=f_s))
+  geom_line(aes(x = Year, y = Count, color=f_s))+
+  theme_classic()
 
 phd_plt
 
