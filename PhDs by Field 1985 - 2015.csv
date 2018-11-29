@@ -1,33 +1,12 @@
-f_s,1985,2000,2015
-All fields,"31,295","41,296","54,999"
-Male,"20,552","23,165","29,596"
-Female,"10,743","18,131","25,403"
-Life sciencesb,"5,822","8,611","12,519"
-Male,"3,946","4,568","5,578"
-Female,"1,876","4,043","6,941"
-Physical sciences and earth sciences,"3,491","4,063","5,923"
-PSES_Male,"2,922","3,041","3,935"
-PSES_Female,569,"1,022","1,988"
-Mathematics and computer sciences,998,"1,907","3,823"
-Male,859,"1,507","2,880"
-Female,139,400,943
-Psychology and social sciences,"6,027","7,443","9,094"
-Male,"3,517","3,370","3,762"
-Female,"2,510","4,073","5,332"
-Engineering,"3,166","5,297","9,897"
-Engi_Male,"2,968","4,459","7,596"
-Engi_Female,198,838,"2,301"
-Education,"6,733","6,439","5,116"
-Edu_Male,"3,242","2,260","1,614"
-Edu_Female,"3,491","4,179","3,502"
-Humanities and arts,"3,406","5,458","5,599"
-HA_Male,"2,014","2,786","2,767"
-HA_Female,"1,392","2,672","2,832"
-Otherc,"1,652","2,078","3,028"
-Male,"1,084","1,174","1,464"
-Female,568,904,"1,564"
-,,,
-"a Excludes respondents who did not report sex: 171 in 1995, 73 in 2000, 66 in 2005, 16 in 2010, and 7 in 2015.",,,
-b Includes agricultural sciences and natural resources; biological and biomedical sciences; and health sciences.,,,
-c Non-science and engineering fields not shown separately.,,,
-"SOURCE: National Science Foundation, National Center for Science and Engineering Statistics, Survey of Earned Doctorates.",,,
+"Table 14. Doctorate recipients, by broad field of study and sex: Selected years, 1985Ð2015",,,,,,,
+,,,,,,,
+,,,,,,,
+f_s,1985,1990,1995,2000,2005,2010,2015
+PSES_Male,"2,922","3,421","3,499","3,041","3,141","3,379","3,935"
+PSES_Female,569,791,"1,020","1,022","1,216","1,615","1,988"
+Engi_Male,"2,968","4,479","5,270","4,459","5,226","5,829","7,596"
+Engi_Female,198,415,696,838,"1,182","1,746","2,301"
+Edu_Male,"3,242","2,758","2,546","2,260","2,065","1,662","1,614"
+Edu_Female,"3,491","3,751","4,092","4,179","4,152","3,624","3,502"
+HA_Male,"2,014","2,188","2,695","2,786","2,600","2,462","2,767"
+HA_Female,"1,392","1,666","2,339","2,672","2,581","2,553","2,832"
