@@ -9,6 +9,18 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+```{r}
+# loading tidyverse
+library(tidyverse)
+
+# loading csv files
+faculty_salary = read_csv("Faculty salary data (2008 - 2009 survey).csv")
+grad_enroll = read_csv("Grad enrollment 1967 - 2015.csv")
+med_salary = read_csv("Median salary for doctoral recipients.csv")
+phd = read_csv("PhDs by Field 1985 - 2015.csv")
+```
+
+
 #### Part 1
 ```{r}
 
