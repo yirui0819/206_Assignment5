@@ -1,0 +1,34 @@
+---
+title: "Assignment 5"
+author: "Tyanna Bui"
+date: "11/28/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#### Part 1
+```{r}
+
+```
+
+
+#### Part 2
+```{r}
+
+```
+
+
+#### Part 3
+```{r}
+
+```
+
+
+### Part 4
+```{r}
+
+```
+
