@@ -140,5 +140,26 @@ phd_plt
 ### Part 4
 ```{r}
 
+by_rank <- ggplot(faculty_salary, aes(x = salary)) +
+  geom_density(aes(color = faculty_rank, fill = faculty_rank), alpha = 0.3)
+
+by_rank
+prof_salary <- filter(faculty_salary, faculty_rank == "Prof")
+
+by_sex_prof <- ggplot(faculty_salary, aes(x = salary)) +
+  geom_density(aes(color = sex, fill = sex), alpha = 0.3)
+
+by_sex_prof
+
+by_phd_grad <- ggplot(faculty_salary, aes(x = years_since_PhD, y = salary))+
+  geom_point(aes(color = discipline, shape = sex))+
+  facet_wrap(~faculty_rank)
+  
+by_phd_grad
+
+by_fac_year <- ggplot(faculty_salary, aes(x = years_faculty_service, y = salary))+
+  geom_point(aes(color = discipline, shape = sex))+
+  facet_wrap(~faculty_rank) 
+by_fac_year
 ```
 
