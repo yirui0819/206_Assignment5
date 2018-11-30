@@ -133,7 +133,19 @@ phd_plt
 
 #### Part 3
 ```{r}
+#Null Hypothesis: Ranks are equal
+#Alternative Hypothesis: Ranks are NOT equal
+median_pd <- wilcox.test(med_salary$men_postdoc, med_salary$women_postdoc, paird = TRUE)
+median_pd
+#p-value is more than 0.05--retain the null hypothesis
+#There is no significant difference in postdoc salary between men and women
 
+#Null Hypothesis: Ranks are equal
+#Alternative Hypothesis: Ranks are NOT equal
+median_npd <- wilcox.test(med_salary$men_employment, med_salary$women_employment, paird = TRUE)
+median_npd
+#p-value is more than 0.05--retain the null hypothesis
+#There is no significant difference in employment salary between men and women
 ```
 
 
