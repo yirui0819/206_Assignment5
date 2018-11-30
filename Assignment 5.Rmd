@@ -12,6 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r}
 # loading tidyverse
 library(tidyverse)
+library(car)
 
 # loading csv files
 faculty_salary = read_csv("Faculty salary data (2008 - 2009 survey).csv")
@@ -173,5 +174,43 @@ by_fac_year <- ggplot(faculty_salary, aes(x = years_faculty_service, y = salary)
   geom_point(aes(color = discipline, shape = sex))+
   facet_wrap(~faculty_rank) 
 by_fac_year
+```
+
+
+
+```{r}
+
+salary_lm1 <- lm(salary ~ faculty_rank + discipline + years_since_PhD + years_faculty_service + sex, data = faculty_salary)
+
+summary(salary_lm1)
+
+vif(salary_lm1)
+
+```
+
+```{r}
+
+salary_lm2 <- lm(salary ~ faculty_rank + discipline + years_faculty_service + sex, data = faculty_salary)
+
+summary(salary_lm2)
+
+vif(salary_lm2)
+
+```
+
+```{r}
+
+salary_lm3 <- lm(salary ~ faculty_rank + discipline + years_since_PhD + sex, data = faculty_salary)
+
+summary(salary_lm3)
+
+vif(salary_lm3)
+
+```
+
+```{r}
+AIC(salary_lm1)
+AIC(salary_lm2)
+AIC(salary_lm3)
 ```
 
