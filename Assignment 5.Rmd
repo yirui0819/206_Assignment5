@@ -213,4 +213,3 @@ AIC(salary_lm1)
 AIC(salary_lm2)
 AIC(salary_lm3)
 ```
-
