@@ -13,6 +13,10 @@ knitr::opts_chunk$set(echo = TRUE)
 # loading tidyverse
 library(tidyverse)
 library(car)
+library(kableExtra)
+library(effsize)
+library(stargazer)
+
 
 # loading csv files
 faculty_salary = read_csv("Faculty salary data (2008 - 2009 survey).csv")
@@ -47,16 +51,25 @@ plot_enroll = ggplot(full_enroll, aes(x = year, y = full_time_men)) +
 plot_enroll
 
 
-# total enrollment dataset & plotting for background info
+# total enrollment dataset & plotting (USING)
 total_enroll = select(grad_enroll, year, total_men, total_women)
 plot_total_enroll = ggplot(total_enroll, aes(x = year, y = total_men)) +
-  geom_line(color = 'red') +
-  geom_line(data = grad_enroll, aes(x = year, y = total_women), color = 'pink') +
-  theme_classic() +
-  labs(x = "Year", y = "Amount Enrolled in Graduate School")
+  geom_point(color = 'cornflowerblue') +
+  geom_point(data = grad_enroll, aes(x = year, y = total_women), color = 'pink') +
+  theme_classic() + 
+  geom_smooth(method = lm, se = TRUE, size = 0.5, (aes(y = total_women)), color = "pink") +
+  geom_smooth(method = lm, se = TRUE, size = 0.5, (aes(y = total_men)), color = "blue") +
+  labs(x = "Year", y = "Amount Enrolled in Graduate School") +
+  scale_color_discrete(name = "Gender", labels = c("Men", "Women"))
+#HOW THE HECK DO I MAKE THE LEGEND!! Dx
 # Viewing plot
 plot_total_enroll
 
+# Linear regression for females & males
+female_lm = lm(total_women ~ year, data = total_enroll)
+male_lm = lm(total_men ~ year, data = total_enroll)
+summary(female_lm)
+summary(male_lm)
 
 
 ```
