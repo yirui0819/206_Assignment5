@@ -87,7 +87,7 @@ rownames(phd_PSES) <- c("PSES_Male", "PSES_Female")
 phd_PSES <- t(phd_PSES)
 phd_PSES1 <- data.matrix(phd_PSES)
 PSES_prop <- prop.table(phd_PSES1, 1)
-PSES_x2 <- chisq.test(PSES_prop)
+PSES_x2 <- chisq.test(phd_PSES1)
 PSES_x2
 
 phd_Engi <- phd %>%
@@ -99,7 +99,7 @@ rownames(phd_Engi) <- c("Engi_Male", "Engi_Female")
 phd_Engi <- t(phd_Engi)
 phd_Engi1 <- data.matrix(phd_Engi)
 Engi_prop <- prop.table(phd_Engi1, 1)
-Engi_x2 <- chisq.test(Engi_prop)
+Engi_x2 <- chisq.test(phd_Engi1)
 Engi_x2
 
 phd_Edu <- phd %>%
@@ -111,7 +111,7 @@ rownames(phd_Edu) <- c("Edu_Male", "Edu_Female")
 phd_Edu <- t(phd_Edu)
 phd_Edu1 <- data.matrix(phd_Edu)
 Edu_prop <- prop.table(phd_Edu1, 1)
-Edu_x2 <- chisq.test(Edu_prop)
+Edu_x2 <- chisq.test(phd_Edu1)
 Edu_x2
 
 phd_HA <- phd %>%
@@ -123,7 +123,7 @@ rownames(phd_HA) <- c("HA_Male", "HA_Female")
 phd_HA <- t(phd_HA)
 phd_HA1 <- data.matrix(phd_HA)
 HA_prop <- prop.table(phd_HA1, 1)
-HA_x2 <- chisq.test(HA_prop)
+HA_x2 <- chisq.test(phd_HA1)
 HA_x2
 
 phd_plot <- phd %>% 
@@ -141,6 +141,22 @@ phd_plt <- ggplot(phd_plot)+
 
 phd_plt
 
+
+```
+
+```{r}
+#COMPRISION 2
+
+phd_2 <- phd %>%
+  filter(`f_s` == "PSES_Female" | `f_s` == "Engi_Female" |`f_s` == "Edu_Female" |`f_s` == "HA_Female" ) %>% 
+  select("1985", "2000", "2015")
+
+rownames(phd_2) <- c("PSES", "Engi", "Edu", "HA")
+phd_2 <- t(phd_2)
+phd_2 <- data.matrix(phd_2)
+phd_prop <- prop.table(phd_2, 1)
+phd_x2 <- chisq.test(phd_2)
+phd_x2
 
 ```
 
