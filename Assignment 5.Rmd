@@ -169,6 +169,34 @@ phd_x2
 
 ```
 
+```{r}
+
+phd_3 <- phd %>%
+  filter(`f_s` == "PSES_Female" | `f_s` == "Engi_Female" |`f_s` == "Edu_Female" |`f_s` == "HA_Female" ) %>% 
+  select(-f_s)
+
+rownames(phd_3) <- c("PSES", "Engi", "Edu", "HA")
+phd_3 <- t(phd_3)
+phd_3 <- data.matrix(phd_3)
+phd3_prop <- prop.table(phd_3, 1)
+phd3_prop <- t(phd3_prop)
+phd3_prop <- as.data.frame(phd3_prop)
+
+phd3_prop <- mutate(phd3_prop, Field = c("Physical and Earth Sciences", "Engineering", "Education", "Humanities & Arts"))
+phd3_prop <- gather(phd3_prop, "Year", "Count", 1:7)
+phd3_prop$Year <- as.numeric(phd3_prop$Year)
+
+phd_plt2 <- ggplot(phd3_prop) +
+  geom_line(aes(x = Year, y = Count, color=Field)) +
+  theme_pubr() +
+  labs(color = "Field", x = "\nYear", y = "Female PhD Recipients Proportion\n")+
+  scale_x_continuous(breaks = seq(1985, 2020, by = 5)) +
+  scale_y_continuous(breaks = seq(0, 1, by = 0.1))
+  
+
+phd_plt2
+
+```
 
 #### Part 3
 ```{r}
