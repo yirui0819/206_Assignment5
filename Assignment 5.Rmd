@@ -14,6 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(car)
 library(kableExtra)
+library(ggpubr)
 library(effsize)
 library(stargazer)
 
@@ -126,6 +127,10 @@ HA_prop <- prop.table(phd_HA1, 1)
 HA_x2 <- chisq.test(phd_HA1)
 HA_x2
 
+
+```
+
+```{r}
 phd_plot <- phd %>% 
   filter(`f_s` == "PSES_Female" |
            `f_s` == "Engi_Female" |
@@ -135,14 +140,18 @@ phd_plot <- phd %>%
   gather("Year", "Count", 2:8)
 phd_plot$Year <- as.numeric(phd_plot$Year)
 
-phd_plt <- ggplot(phd_plot)+
-  geom_line(aes(x = Year, y = Count, color=f_s))+
-  theme_classic()
+phd_plot$f_s <- factor(phd_plot$f_s, levels=c("PSES_Female", "Engi_Female", "Edu_Female", "HA_Female"), labels=c("Physical and Earth Sciences", "Engineering", "Education", "Humanities & Arts"))
+
+phd_plt <- ggplot(phd_plot) +
+  geom_line(aes(x = Year, y = Count, color=f_s)) +
+  theme_pubr() +
+  labs(color = "Field", x = "\nYear", y = "Female PhD Recipients\n")+
+  scale_x_continuous(breaks = seq(1985, 2020, by = 5))
+  
 
 phd_plt
-
-
 ```
+
 
 ```{r}
 #COMPRISION 2
