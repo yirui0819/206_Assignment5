@@ -136,17 +136,38 @@ phd_plt
 ```{r}
 #Null Hypothesis: Ranks are equal
 #Alternative Hypothesis: Ranks are NOT equal
-median_pd <- wilcox.test(med_salary$men_postdoc, med_salary$women_postdoc, paird = TRUE)
+median_pd <- wilcox.test(med_salary$men_postdoc, med_salary$women_postdoc, paired = TRUE)
 median_pd
 #p-value is more than 0.05--retain the null hypothesis
 #There is no significant difference in postdoc salary between men and women
 
 #Null Hypothesis: Ranks are equal
 #Alternative Hypothesis: Ranks are NOT equal
-median_npd <- wilcox.test(med_salary$men_employment, med_salary$women_employment, paird = TRUE)
+median_npd <- wilcox.test(med_salary$men_employment, med_salary$women_employment, paired = TRUE)
 median_npd
-#p-value is more than 0.05--retain the null hypothesis
-#There is no significant difference in employment salary between men and women
+#p-value is less than 0.05--retain the null hypothesis
+#There is a significant difference in employment salary between men and women
+
+#Graph
+table_salary <- read_csv("median_doctoral_salary.csv")
+doc_salary <- table_salary %>% 
+  mutate(postgrad_plan = ifelse(postgrad_plan == "Employment", "Non-Postdoctoral", "Postdoctoral"))
+
+graph_salary <- ggplot(doc_salary, aes(x= factor(field,levels = rev(levels(factor(field)))), y = salary)) +
+  geom_col(aes(fill = sex), position = "dodge") +
+  facet_wrap(~postgrad_plan) +
+  theme_classic() +
+  labs(x = "Subject", y = "Median Salary ($)") +
+scale_x_discrete(expand = c(0,0),limits = rev(levels(doc_salary$field))) +
+  scale_y_continuous(expand = c(0,0)) +
+  coord_flip() +
+  labs(x = "") +
+  theme(panel.spacing = unit(2, "lines")) +
+  scale_fill_manual(values=c("pink","skyblue")) +
+  guides(fill=guide_legend(title="Sex"))
+  
+graph_salary
+
 ```
 
 
