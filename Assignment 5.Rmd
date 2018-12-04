@@ -57,11 +57,12 @@ total_enroll = select(grad_enroll, year, total_men, total_women)
 plot_total_enroll = ggplot(total_enroll, aes(x = year, y = total_men)) +
   geom_point(color = 'cornflowerblue') +
   geom_point(data = grad_enroll, aes(x = year, y = total_women), color = 'pink') +
-  theme_classic() + 
-  geom_smooth(method = lm, se = TRUE, size = 0.5, (aes(y = total_women)), color = "pink") +
-  geom_smooth(method = lm, se = TRUE, size = 0.5, (aes(y = total_men)), color = "blue") +
-  labs(x = "Year", y = "Amount Enrolled in Graduate School") +
-  scale_color_discrete(name = "Gender", labels = c("Men", "Women"))
+  theme_pubr() + 
+  geom_smooth(method = lm, se = TRUE, size = 0.5, aes(y = total_women, x = year, color = "Female")) +
+  geom_smooth(method = lm, se = TRUE, size = 0.5, aes(y = total_men, x = year, color = "Male")) +
+  labs(x = "\nYear", y = "Amount Enrolled in Graduate School\n") +
+  scale_color_manual(name = "Gender", values = c("Female" = "pink", "Male" = "blue")) +
+  scale_x_continuous(breaks = seq(1965, 2020, by = 10))
 #HOW THE HECK DO I MAKE THE LEGEND!! Dx
 # Viewing plot
 plot_total_enroll
@@ -279,3 +280,8 @@ AIC(salary_lm1)
 AIC(salary_lm2)
 AIC(salary_lm3)
 ```
+
+```{r, results='asis'}
+lm_table <- stargazer(salary_lm3, type = "html")
+```
+
