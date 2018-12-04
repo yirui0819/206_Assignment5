@@ -212,11 +212,19 @@ median_pd
 #Alternative Hypothesis: Ranks are NOT equal
 median_npd <- wilcox.test(med_salary$men_employment, med_salary$women_employment, paired = TRUE)
 median_npd
+
+table_salary <- read_csv("median_doctoral_salary.csv")
+
+coh_pd <- cliff.delta(med_salary$men_postdoc, med_salary$women_postdoc)
+coh_pd
+
+coh_npd <- cliff.delta(med_salary$men_employment, med_salary$women_employment)
+coh_npd
 #p-value is less than 0.05--retain the null hypothesis
 #There is a significant difference in employment salary between men and women
 
 #Graph
-table_salary <- read_csv("median_doctoral_salary.csv")
+
 doc_salary <- table_salary %>% 
   mutate(postgrad_plan = ifelse(postgrad_plan == "Employment", "Non-Postdoctoral", "Postdoctoral"))
 
