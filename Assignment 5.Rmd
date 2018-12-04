@@ -13,6 +13,11 @@ knitr::opts_chunk$set(echo = TRUE)
 # loading tidyverse
 library(tidyverse)
 library(car)
+library(kableExtra)
+library(ggpubr)
+library(effsize)
+library(stargazer)
+
 
 # loading csv files
 faculty_salary = read_csv("Faculty salary data (2008 - 2009 survey).csv")
@@ -47,16 +52,26 @@ plot_enroll = ggplot(full_enroll, aes(x = year, y = full_time_men)) +
 plot_enroll
 
 
-# total enrollment dataset & plotting for background info
+# total enrollment dataset & plotting (USING)
 total_enroll = select(grad_enroll, year, total_men, total_women)
 plot_total_enroll = ggplot(total_enroll, aes(x = year, y = total_men)) +
-  geom_line(color = 'red') +
-  geom_line(data = grad_enroll, aes(x = year, y = total_women), color = 'pink') +
-  theme_classic() +
-  labs(x = "Year", y = "Amount Enrolled in Graduate School")
+  geom_point(color = 'cornflowerblue') +
+  geom_point(data = grad_enroll, aes(x = year, y = total_women), color = 'pink') +
+  theme_pubr() + 
+  geom_smooth(method = lm, se = TRUE, size = 0.5, aes(y = total_women, x = year, color = "Female")) +
+  geom_smooth(method = lm, se = TRUE, size = 0.5, aes(y = total_men, x = year, color = "Male")) +
+  labs(x = "\nYear", y = "Amount Enrolled in Graduate School\n") +
+  scale_color_manual(name = "Gender", values = c("Female" = "pink", "Male" = "blue")) +
+  scale_x_continuous(breaks = seq(1965, 2020, by = 10))
+#HOW THE HECK DO I MAKE THE LEGEND!! Dx
 # Viewing plot
 plot_total_enroll
 
+# Linear regression for females & males
+female_lm = lm(total_women ~ year, data = total_enroll)
+male_lm = lm(total_men ~ year, data = total_enroll)
+summary(female_lm)
+summary(male_lm)
 
 
 ```
@@ -74,7 +89,7 @@ rownames(phd_PSES) <- c("PSES_Male", "PSES_Female")
 phd_PSES <- t(phd_PSES)
 phd_PSES1 <- data.matrix(phd_PSES)
 PSES_prop <- prop.table(phd_PSES1, 1)
-PSES_x2 <- chisq.test(PSES_prop)
+PSES_x2 <- chisq.test(phd_PSES1)
 PSES_x2
 
 phd_Engi <- phd %>%
@@ -86,7 +101,7 @@ rownames(phd_Engi) <- c("Engi_Male", "Engi_Female")
 phd_Engi <- t(phd_Engi)
 phd_Engi1 <- data.matrix(phd_Engi)
 Engi_prop <- prop.table(phd_Engi1, 1)
-Engi_x2 <- chisq.test(Engi_prop)
+Engi_x2 <- chisq.test(phd_Engi1)
 Engi_x2
 
 phd_Edu <- phd %>%
@@ -98,7 +113,7 @@ rownames(phd_Edu) <- c("Edu_Male", "Edu_Female")
 phd_Edu <- t(phd_Edu)
 phd_Edu1 <- data.matrix(phd_Edu)
 Edu_prop <- prop.table(phd_Edu1, 1)
-Edu_x2 <- chisq.test(Edu_prop)
+Edu_x2 <- chisq.test(phd_Edu1)
 Edu_x2
 
 phd_HA <- phd %>%
@@ -110,9 +125,13 @@ rownames(phd_HA) <- c("HA_Male", "HA_Female")
 phd_HA <- t(phd_HA)
 phd_HA1 <- data.matrix(phd_HA)
 HA_prop <- prop.table(phd_HA1, 1)
-HA_x2 <- chisq.test(HA_prop)
+HA_x2 <- chisq.test(phd_HA1)
 HA_x2
 
+
+```
+
+```{r}
 phd_plot <- phd %>% 
   filter(`f_s` == "PSES_Female" |
            `f_s` == "Engi_Female" |
@@ -122,15 +141,63 @@ phd_plot <- phd %>%
   gather("Year", "Count", 2:8)
 phd_plot$Year <- as.numeric(phd_plot$Year)
 
-phd_plt <- ggplot(phd_plot)+
-  geom_line(aes(x = Year, y = Count, color=f_s))+
-  theme_classic()
+phd_plot$f_s <- factor(phd_plot$f_s, levels=c("PSES_Female", "Engi_Female", "Edu_Female", "HA_Female"), labels=c("Physical and Earth Sciences", "Engineering", "Education", "Humanities & Arts"))
+
+phd_plt <- ggplot(phd_plot) +
+  geom_line(aes(x = Year, y = Count, color=f_s)) +
+  theme_pubr() +
+  labs(color = "Field", x = "\nYear", y = "Female PhD Recipients\n")+
+  scale_x_continuous(breaks = seq(1985, 2020, by = 5))
+  
 
 phd_plt
+```
 
+
+```{r}
+#COMPRISION 2
+
+phd_2 <- phd %>%
+  filter(`f_s` == "PSES_Female" | `f_s` == "Engi_Female" |`f_s` == "Edu_Female" |`f_s` == "HA_Female" ) %>% 
+  select("1985", "2000", "2015")
+
+rownames(phd_2) <- c("PSES", "Engi", "Edu", "HA")
+phd_2 <- t(phd_2)
+phd_2 <- data.matrix(phd_2)
+phd_prop <- prop.table(phd_2, 1)
+phd_x2 <- chisq.test(phd_2)
+phd_x2
 
 ```
 
+```{r}
+
+phd_3 <- phd %>%
+  filter(`f_s` == "PSES_Female" | `f_s` == "Engi_Female" |`f_s` == "Edu_Female" |`f_s` == "HA_Female" ) %>% 
+  select(-f_s)
+
+rownames(phd_3) <- c("PSES", "Engi", "Edu", "HA")
+phd_3 <- t(phd_3)
+phd_3 <- data.matrix(phd_3)
+phd3_prop <- prop.table(phd_3, 1)
+phd3_prop <- t(phd3_prop)
+phd3_prop <- as.data.frame(phd3_prop)
+
+phd3_prop <- mutate(phd3_prop, Field = c("Physical and Earth Sciences", "Engineering", "Education", "Humanities & Arts"))
+phd3_prop <- gather(phd3_prop, "Year", "Count", 1:7)
+phd3_prop$Year <- as.numeric(phd3_prop$Year)
+
+phd_plt2 <- ggplot(phd3_prop) +
+  geom_line(aes(x = Year, y = Count, color=Field)) +
+  theme_pubr() +
+  labs(color = "Field", x = "\nYear", y = "Female PhD Recipients Proportion\n")+
+  scale_x_continuous(breaks = seq(1985, 2020, by = 5)) +
+  scale_y_continuous(breaks = seq(0, 1, by = 0.1))
+  
+
+phd_plt2
+
+```
 
 #### Part 3
 ```{r}
@@ -233,5 +300,9 @@ vif(salary_lm3)
 AIC(salary_lm1)
 AIC(salary_lm2)
 AIC(salary_lm3)
+```
+
+```{r, results='asis'}
+lm_table <- stargazer(salary_lm3, type = "html")
 ```
 
