@@ -228,11 +228,11 @@ coh_npd
 doc_salary <- table_salary %>% 
   mutate(postgrad_plan = ifelse(postgrad_plan == "Employment", "Non-Postdoctoral", "Postdoctoral"))
 
-graph_salary <- ggplot(doc_salary, aes(x= factor(field,levels = rev(levels(factor(field)))), y = salary)) +
+graph_salary <- ggplot(doc_salary, aes(x= factor(field,levels = rev(levels(factor(field)))), y = salary/1000)) +
   geom_col(aes(fill = sex), position = "dodge") +
   facet_wrap(~postgrad_plan) +
   theme_classic() +
-  labs(x = "Subject", y = "Median Salary ($)") +
+  labs(x = "Subject", y = "Median Salary of Doctoral Recipients (thousand dollar)") +
 scale_x_discrete(expand = c(0,0),limits = rev(levels(doc_salary$field))) +
   scale_y_continuous(expand = c(0,0)) +
   coord_flip() +
